@@ -24,19 +24,14 @@ resource "aws_api_gateway_method" "method" {
   authorization = "NONE"
 }
 
-resource "aws_lambda_function" "periodo_demonstrativo" {
+data "aws_lambda_function" "periodo_demonstrativo" {
   function_name = "periodo-demonstrativo"
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.8"
-  role          = aws_iam_role.lambda_exec.arn
-  s3_bucket     = "your-s3-bucket-name"
-  s3_key        = "path/to/your/lambda_function.zip"
 }
 
 resource "aws_lambda_permission" "apigw" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.periodo_demonstrativo.function_name
+  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
@@ -47,5 +42,5 @@ resource "aws_api_gateway_integration" "integration" {
   http_method = aws_api_gateway_method.method.http_method
   integration_http_method = "POST"
   type        = "AWS_PROXY"
-  uri         = aws_lambda_function.periodo_demonstrativo.invoke_arn
+  uri         = data.aws_lambda_function.periodo_demonstrativo.invoke_arn
 }
