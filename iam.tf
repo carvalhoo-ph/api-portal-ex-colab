@@ -43,6 +43,16 @@ resource "aws_iam_policy" "github_actions_policy" {
         Effect   = "Allow"
         Resource = "*"
       },
+      {
+        Action = [
+          "iam:CreateRole",
+          "iam:CreatePolicy",
+          "iam:AttachRolePolicy",
+          "iam:PutRolePolicy"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
     ]
   })
 }
