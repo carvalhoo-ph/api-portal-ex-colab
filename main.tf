@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_api_gateway_rest_api" "api" {
-  name        = "MyAPI"
+  name        = "API_postar_ex-colab"
   description = "API Gateway for my application"
 }
 
