@@ -1,5 +1,5 @@
 resource "aws_iam_role" "github_actions" {
-  name = "github_actions_role"
+  name = "github_actions_role_${random_string.suffix.result}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,7 +16,7 @@ resource "aws_iam_role" "github_actions" {
 }
 
 resource "aws_iam_policy" "github_actions_policy" {
-  name = "github_actions_policy"
+  name = "github_actions_policy_${random_string.suffix.result}"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -60,4 +60,9 @@ resource "aws_iam_policy" "github_actions_policy" {
 resource "aws_iam_role_policy_attachment" "github_actions_attach" {
   role       = aws_iam_role.github_actions.name
   policy_arn = aws_iam_policy.github_actions_policy.arn
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
 }

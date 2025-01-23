@@ -2,6 +2,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
+provider "random" {
+  # Configuração do provedor random
+}
+
 resource "aws_api_gateway_rest_api" "api" {
   name        = "API_postar_ex-colab"
   description = "API Gateway for my application"
