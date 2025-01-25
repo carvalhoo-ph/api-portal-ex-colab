@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 provider "random" {
-  # Configuração do provedor random
+  # Configuração do provedor random 
 }
 
 resource "aws_api_gateway_rest_api" "api" {
