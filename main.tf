@@ -9,6 +9,10 @@ provider "random" {
 resource "aws_api_gateway_rest_api" "api" {
   name        = "API_postar_ex-colab"
   description = "API Gateway for my application"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_api_gateway_resource" "resource" {
