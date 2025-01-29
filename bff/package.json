@@ -1,7 +1,7 @@
 {
   "name": "bff-api",
   "version": "1.0.0",
-  "description": "Backend for Frontend API ",
+  "description": "Backend for Frontend API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

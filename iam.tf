@@ -1,3 +1,4 @@
+# GitHub Actions IAM Role and Policy
 resource "aws_iam_role" "github_actions" {
   name = "github_actions_role_${random_string.suffix.result}"
 
@@ -62,6 +63,7 @@ resource "aws_iam_role_policy_attachment" "github_actions_attach" {
   policy_arn = aws_iam_policy.github_actions_policy.arn
 }
 
+# Lambda Execution IAM Role and Policy
 resource "aws_iam_role" "lambda_exec" {
   name = "lambda_exec_role_${random_string.suffix.result}"
 
