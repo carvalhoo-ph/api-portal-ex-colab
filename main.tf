@@ -29,6 +29,20 @@ resource "aws_api_gateway_method" "method_periodo_demonstrativo" {
   resource_id   = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method   = "GET"
   authorization = "NONE"
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin" = true
+      "method.response.header.Access-Control-Allow-Headers" = true
+      "method.response.header.Access-Control-Allow-Methods" = true
+    }
+  }
 }
 
 data "aws_lambda_function" "periodo_demonstrativo" {
@@ -50,6 +64,16 @@ resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
   integration_http_method = "POST"
   type        = "AWS_PROXY"
   uri         = data.aws_lambda_function.periodo_demonstrativo.invoke_arn
+
+  integration_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin" = "'*'"
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
+    }
+  }
 }
 
 # Login Lambda Integration
@@ -64,6 +88,20 @@ resource "aws_api_gateway_method" "method_login" {
   resource_id   = aws_api_gateway_resource.resource_login.id
   http_method   = "POST"
   authorization = "NONE"
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin" = true
+      "method.response.header.Access-Control-Allow-Headers" = true
+      "method.response.header.Access-Control-Allow-Methods" = true
+    }
+  }
 }
 
 data "aws_lambda_function" "login" {
@@ -85,4 +123,19 @@ resource "aws_api_gateway_integration" "integration_login" {
   integration_http_method = "POST"
   type        = "AWS_PROXY"
   uri         = data.aws_lambda_function.login.invoke_arn
+
+  integration_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin" = "'*'"
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
+    }
+  }
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
 }
