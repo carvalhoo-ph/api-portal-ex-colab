@@ -25,5 +25,6 @@ app.get('/api/data', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`BFF API listening at http://localhost:${port}`);
+  const startTime = new Date().toLocaleString();
+  console.log(`BFF API listening at http://localhost:${port} - Started at ${startTime}`);
 });

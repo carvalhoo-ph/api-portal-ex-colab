@@ -36,7 +36,7 @@ data "aws_lambda_function" "periodo_demonstrativo" {
 }
 
 resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
-  statement_id  = "AllowAPIGatewayInvoke"
+  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativo-${random_string.suffix.result}"
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
   principal     = "apigateway.amazonaws.com"
@@ -71,7 +71,7 @@ data "aws_lambda_function" "login" {
 }
 
 resource "aws_lambda_permission" "apigw_login" {
-  statement_id  = "AllowAPIGatewayInvoke"
+  statement_id  = "AllowAPIGatewayInvokeLogin-${random_string.suffix.result}"
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.login.function_name
   principal     = "apigateway.amazonaws.com"
@@ -85,4 +85,9 @@ resource "aws_api_gateway_integration" "integration_login" {
   integration_http_method = "POST"
   type        = "AWS_PROXY"
   uri         = data.aws_lambda_function.login.invoke_arn
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
 }
