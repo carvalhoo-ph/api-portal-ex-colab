@@ -52,14 +52,6 @@ data "aws_lambda_function" "periodo_demonstrativo" {
   function_name = "periodo-demonstrativo"
 }
 
-resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
-  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativo-${random_string.suffix.result}"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
-}
-
 resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
@@ -119,14 +111,6 @@ resource "aws_api_gateway_method_response" "method_response_login" {
 
 data "aws_lambda_function" "login" {
   function_name = "login"
-}
-
-resource "aws_lambda_permission" "apigw_login" {
-  statement_id  = "AllowAPIGatewayInvokeLogin-${random_string.suffix.result}"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.login.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
 
 resource "aws_api_gateway_integration" "integration_login" {
