@@ -80,6 +80,10 @@ resource "aws_api_gateway_integration_response" "integration_response_periodo_de
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
   }
+
+  depends_on = [
+    aws_api_gateway_integration.integration_periodo_demonstrativo
+  ]
 }
 
 # Login Lambda Integration
@@ -145,4 +149,8 @@ resource "aws_api_gateway_integration_response" "integration_response_login" {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
     "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
   }
+
+  depends_on = [
+    aws_api_gateway_integration.integration_login
+  ]
 }
