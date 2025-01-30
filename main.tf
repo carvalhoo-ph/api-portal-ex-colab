@@ -29,19 +29,22 @@ resource "aws_api_gateway_method" "method_periodo_demonstrativo" {
   resource_id   = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method   = "GET"
   authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "method_response_periodo_demonstrativo" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
+  http_method = aws_api_gateway_method.method_periodo_demonstrativo.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+  }
 
   response_models = {
     "application/json" = "Empty"
-  }
-
-  method_response {
-    status_code = "200"
-
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Origin" = true
-      "method.response.header.Access-Control-Allow-Headers" = true
-      "method.response.header.Access-Control-Allow-Methods" = true
-    }
   }
 }
 
@@ -88,19 +91,22 @@ resource "aws_api_gateway_method" "method_login" {
   resource_id   = aws_api_gateway_resource.resource_login.id
   http_method   = "POST"
   authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "method_response_login" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.resource_login.id
+  http_method = aws_api_gateway_method.method_login.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+  }
 
   response_models = {
     "application/json" = "Empty"
-  }
-
-  method_response {
-    status_code = "200"
-
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Origin" = true
-      "method.response.header.Access-Control-Allow-Headers" = true
-      "method.response.header.Access-Control-Allow-Methods" = true
-    }
   }
 }
 
