@@ -17,6 +17,22 @@ resource "aws_api_gateway_rest_api" "api" {
   }
 }
 
+resource "aws_api_gateway_stage" "stage" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  stage_name  = "prod"
+  deployment_id = aws_api_gateway_deployment.deployment.id
+}
+
+resource "aws_api_gateway_deployment" "deployment" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  stage_name  = "prod"
+
+  depends_on = [
+    aws_api_gateway_integration.integration_periodo_demonstrativo,
+    aws_api_gateway_integration.integration_login
+  ]
+}
+
 # Periodo Demonstrativo Lambda Integration
 resource "aws_api_gateway_resource" "resource_periodo_demonstrativo" {
   rest_api_id = aws_api_gateway_rest_api.api.id
