@@ -105,6 +105,22 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_attach" {
   policy_arn = aws_iam_policy.lambda_exec_policy.arn
 }
 
+resource "aws_lambda_permission" "apigw_login" {
+  statement_id  = "AllowAPIGatewayInvokeLogin-${random_string.suffix.result}"
+  action        = "lambda:InvokeFunction"
+  function_name = data.aws_lambda_function.login.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
+  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativo-${random_string.suffix.result}"
+  action        = "lambda:InvokeFunction"
+  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+}
+
 resource "random_string" "suffix" {
   length  = 8
   special = false
