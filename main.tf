@@ -134,8 +134,3 @@ resource "aws_api_gateway_integration" "integration_login" {
     }
   }
 }
-
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
