@@ -86,8 +86,3 @@ resource "aws_api_gateway_integration" "integration_login" {
   type        = "AWS_PROXY"
   uri         = data.aws_lambda_function.login.invoke_arn
 }
-
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
