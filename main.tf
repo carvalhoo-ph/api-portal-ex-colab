@@ -17,11 +17,6 @@ resource "aws_api_gateway_rest_api" "api" {
   }
 }
 
-resource "aws_api_gateway_rest_api" "MyApi" {
-  name = "MyApi"
-  // ...existing code...
-}
-
 resource "aws_api_gateway_stage" "stage" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
   stage_name    = "prod"
@@ -231,14 +226,15 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
   }
 }
 
+# MyApi Resources and Methods
 resource "aws_api_gateway_resource" "MyApiResource" {
-  rest_api_id = aws_api_gateway_rest_api.MyApi.id
-  parent_id   = aws_api_gateway_rest_api.MyApi.root_resource_id
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  parent_id   = aws_api_gateway_rest_api.api.root_resource_id
   path_part   = "myresource"
 }
 
 resource "aws_api_gateway_method" "MyApiMethod" {
-  rest_api_id   = aws_api_gateway_rest_api.MyApi.id
+  rest_api_id   = aws_api_gateway_rest_api.api.id
   resource_id   = aws_api_gateway_resource.MyApiResource.id
   http_method   = "POST"
   authorization = "NONE"
@@ -249,7 +245,7 @@ resource "aws_api_gateway_method" "MyApiMethod" {
 }
 
 resource "aws_api_gateway_integration" "MyApiIntegration" {
-  rest_api_id             = aws_api_gateway_rest_api.MyApi.id
+  rest_api_id             = aws_api_gateway_rest_api.api.id
   resource_id             = aws_api_gateway_resource.MyApiResource.id
   http_method             = aws_api_gateway_method.MyApiMethod.http_method
   integration_http_method = "POST"
@@ -258,7 +254,7 @@ resource "aws_api_gateway_integration" "MyApiIntegration" {
 }
 
 resource "aws_api_gateway_method_response" "MyApiMethodResponse" {
-  rest_api_id = aws_api_gateway_rest_api.MyApi.id
+  rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.MyApiResource.id
   http_method = aws_api_gateway_method.MyApiMethod.http_method
   status_code = "200"
@@ -271,14 +267,14 @@ resource "aws_api_gateway_method_response" "MyApiMethodResponse" {
 }
 
 resource "aws_api_gateway_method" "MyApiOptionsMethod" {
-  rest_api_id   = aws_api_gateway_rest_api.MyApi.id
+  rest_api_id   = aws_api_gateway_rest_api.api.id
   resource_id   = aws_api_gateway_resource.MyApiResource.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "MyApiOptionsIntegration" {
-  rest_api_id             = aws_api_gateway_rest_api.MyApi.id
+  rest_api_id             = aws_api_gateway_rest_api.api.id
   resource_id             = aws_api_gateway_resource.MyApiResource.id
   http_method             = aws_api_gateway_method.MyApiOptionsMethod.http_method
   integration_http_method = "OPTIONS"
@@ -290,7 +286,7 @@ resource "aws_api_gateway_integration" "MyApiOptionsIntegration" {
 }
 
 resource "aws_api_gateway_method_response" "MyApiOptionsMethodResponse" {
-  rest_api_id = aws_api_gateway_rest_api.MyApi.id
+  rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.MyApiResource.id
   http_method = aws_api_gateway_method.MyApiOptionsMethod.http_method
   status_code = "200"
