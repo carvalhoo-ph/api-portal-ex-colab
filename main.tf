@@ -17,6 +17,11 @@ resource "aws_api_gateway_rest_api" "api" {
   }
 }
 
+resource "aws_api_gateway_rest_api" "MyApi" {
+  name = "MyApi"
+  // ...existing code...
+}
+
 resource "aws_api_gateway_stage" "stage" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
   stage_name    = "prod"
@@ -223,5 +228,73 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
 
   response_models = {
     "application/json" = "Empty"
+  }
+}
+
+resource "aws_api_gateway_resource" "MyApiResource" {
+  rest_api_id = aws_api_gateway_rest_api.MyApi.id
+  parent_id   = aws_api_gateway_rest_api.MyApi.root_resource_id
+  path_part   = "myresource"
+}
+
+resource "aws_api_gateway_method" "MyApiMethod" {
+  rest_api_id   = aws_api_gateway_rest_api.MyApi.id
+  resource_id   = aws_api_gateway_resource.MyApiResource.id
+  http_method   = "POST"
+  authorization = "NONE"
+
+  request_parameters = {
+    "method.request.header.Access-Control-Allow-Origin" = false
+  }
+
+  integration {
+    type                    = "AWS_PROXY"
+    integration_http_method = "POST"
+    uri                     = "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:123456789012:function:MyFunction/invocations"
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
+    }
+  }
+}
+
+resource "aws_api_gateway_method" "MyApiOptionsMethod" {
+  rest_api_id   = aws_api_gateway_rest_api.MyApi.id
+  resource_id   = aws_api_gateway_resource.MyApiResource.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+
+  integration {
+    type = "MOCK"
+
+    request_templates = {
+      "application/json" = "{\"statusCode\": 200}"
+    }
+
+    integration_response {
+      status_code = "200"
+
+      response_parameters = {
+        "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
+      }
+    }
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
+    }
   }
 }
