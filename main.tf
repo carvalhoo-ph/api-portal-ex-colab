@@ -18,8 +18,8 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 
 resource "aws_api_gateway_stage" "stage" {
-  rest_api_id = aws_api_gateway_rest_api.api.id
-  stage_name  = "prod"
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  stage_name    = "prod"
   deployment_id = aws_api_gateway_deployment.deployment.id
 }
 
@@ -68,12 +68,12 @@ data "aws_lambda_function" "periodo_demonstrativo" {
 }
 
 resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
-  rest_api_id = aws_api_gateway_rest_api.api.id
-  resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
-  http_method = aws_api_gateway_method.method_periodo_demonstrativo.http_method
+  rest_api_id             = aws_api_gateway_rest_api.api.id
+  resource_id             = aws_api_gateway_resource.resource_periodo_demonstrativo.id
+  http_method             = aws_api_gateway_method.method_periodo_demonstrativo.http_method
   integration_http_method = "POST"
-  type        = "AWS_PROXY"
-  uri         = data.aws_lambda_function.periodo_demonstrativo.invoke_arn
+  type                    = "AWS_PROXY"
+  uri                     = data.aws_lambda_function.periodo_demonstrativo.invoke_arn
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_periodo_demonstrativo" {
@@ -83,7 +83,7 @@ resource "aws_api_gateway_integration_response" "integration_response_periodo_de
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
   }
@@ -109,20 +109,6 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
 
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
-  }
-
-  integration_response {
-    status_code = "200"
-
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-      "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
   }
 }
 
@@ -179,12 +165,12 @@ data "aws_lambda_function" "login" {
 }
 
 resource "aws_api_gateway_integration" "integration_login" {
-  rest_api_id = aws_api_gateway_rest_api.api.id
-  resource_id = aws_api_gateway_resource.resource_login.id
-  http_method = aws_api_gateway_method.method_login.http_method
+  rest_api_id             = aws_api_gateway_rest_api.api.id
+  resource_id             = aws_api_gateway_resource.resource_login.id
+  http_method             = aws_api_gateway_method.method_login.http_method
   integration_http_method = "POST"
-  type        = "AWS_PROXY"
-  uri         = data.aws_lambda_function.login.invoke_arn
+  type                    = "AWS_PROXY"
+  uri                     = data.aws_lambda_function.login.invoke_arn
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_login" {
@@ -194,7 +180,7 @@ resource "aws_api_gateway_integration_response" "integration_response_login" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
     "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
   }
@@ -221,76 +207,12 @@ resource "aws_api_gateway_integration" "integration_options_login" {
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-
-  integration_response {
-    status_code = "200"
-
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-      "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
-  }
 }
 
 resource "aws_api_gateway_method_response" "method_response_options_login" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.resource_login.id
   http_method = aws_api_gateway_method.method_options_login.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true
-    "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
-  }
-
-  response_models = {
-    "application/json" = "Empty"
-  }
-}
-
-resource "aws_api_gateway_method" "method_options" {
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-  resource_id   = aws_api_gateway_resource.resource_login.id
-  http_method   = "OPTIONS"
-  authorization = "NONE"
-}
-
-resource "aws_api_gateway_integration" "integration_options" {
-  rest_api_id             = aws_api_gateway_rest_api.api.id
-  resource_id             = aws_api_gateway_resource.resource_login.id
-  http_method             = aws_api_gateway_method.method_options.http_method
-  integration_http_method = "OPTIONS"
-  type                    = "MOCK"
-
-  request_templates = {
-    "application/json" = "{\"statusCode\": 200}"
-  }
-
-  integration_response {
-    status_code = "200"
-
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-      "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
-  }
-}
-
-resource "aws_api_gateway_method_response" "method_response_options" {
-  rest_api_id = aws_api_gateway_rest_api.api.id
-  resource_id = aws_api_gateway_resource.resource_login.id
-  http_method = aws_api_gateway_method.method_options.http_method
   status_code = "200"
 
   response_parameters = {
