@@ -89,7 +89,7 @@ resource "aws_api_gateway_integration_response" "integration_response_periodo_de
   }
 
   depends_on = [
-    aws_api_gateway_integration.integration_periodo_demonstrativo
+    aws_api_gateway_method_response.method_response_periodo_demonstrativo
   ]
 }
 
@@ -186,7 +186,7 @@ resource "aws_api_gateway_integration_response" "integration_response_login" {
   }
 
   depends_on = [
-    aws_api_gateway_integration.integration_login
+    aws_api_gateway_method_response.method_response_login
   ]
 }
 
