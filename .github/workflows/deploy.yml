@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        # Esta etapa faz o checkout do código do repositório GitHub .
+        # Esta etapa faz o checkout do código do repositório GitHub.
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

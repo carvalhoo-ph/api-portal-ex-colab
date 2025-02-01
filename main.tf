@@ -28,7 +28,8 @@ resource "aws_api_gateway_deployment" "deployment" {
 
   depends_on = [
     aws_api_gateway_integration.integration_periodo_demonstrativo,
-    aws_api_gateway_integration.integration_login
+    aws_api_gateway_integration.integration_login,
+    aws_api_gateway_integration.integration_demonstrativo_pgto
   ]
 }
 
@@ -213,6 +214,103 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   resource_id = aws_api_gateway_resource.resource_login.id
   http_method = aws_api_gateway_method.method_options_login.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+  }
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+}
+
+# Demonstrativo Pgto Lambda Integration
+resource "aws_api_gateway_resource" "resource_demonstrativo_pgto" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  parent_id   = aws_api_gateway_rest_api.api.root_resource_id
+  path_part   = "demonstrativo-pgto"
+}
+
+resource "aws_api_gateway_method" "method_demonstrativo_pgto" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method   = "GET"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "method_response_demonstrativo_pgto" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method = aws_api_gateway_method.method_demonstrativo_pgto.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+  }
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+}
+
+data "aws_lambda_function" "demonstrativo_pgto" {
+  function_name = "demonstrativo-pgto"
+}
+
+resource "aws_api_gateway_integration" "integration_demonstrativo_pgto" {
+  rest_api_id             = aws_api_gateway_rest_api.api.id
+  resource_id             = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method             = aws_api_gateway_method.method_demonstrativo_pgto.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = data.aws_lambda_function.demonstrativo_pgto.invoke_arn
+}
+
+resource "aws_api_gateway_integration_response" "integration_response_demonstrativo_pgto" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method = aws_api_gateway_method.method_demonstrativo_pgto.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
+  }
+
+  depends_on = [
+    aws_api_gateway_method_response.method_response_demonstrativo_pgto
+  ]
+}
+
+resource "aws_api_gateway_method" "method_options_demonstrativo_pgto" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" {
+  rest_api_id             = aws_api_gateway_rest_api.api.id
+  resource_id             = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method             = aws_api_gateway_method.method_options_demonstrativo_pgto.http_method
+  integration_http_method = "OPTIONS"
+  type                    = "MOCK"
+
+  request_templates = {
+    "application/json" = "{\"statusCode\": 200}"
+  }
+}
+
+resource "aws_api_gateway_method_response" "method_response_options_demonstrativo_pgto" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
+  http_method = aws_api_gateway_method.method_options_demonstrativo_pgto.http_method
   status_code = "200"
 
   response_parameters = {
