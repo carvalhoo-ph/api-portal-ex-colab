@@ -51,6 +51,10 @@ jobs:
           cat output.json
         # Esta etapa verifica a saída do comando terraform output -json e define um valor padrão se o output não for encontrado.
 
+      - name: Check output.json content
+        run: cat output.json
+        # Esta etapa verifica o conteúdo do arquivo output.json.
+
       - name: Add k6 repository
         run: |
           sudo apt-get update
