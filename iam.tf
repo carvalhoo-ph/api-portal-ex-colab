@@ -105,6 +105,8 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_attach" {
   policy_arn = aws_iam_policy.lambda_exec_policy.arn
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_lambda_permission" "apigw_login" {
   statement_id  = "AllowAPIGatewayInvokeLogin-${random_string.suffix.result}"
   action        = "lambda:InvokeFunction"
