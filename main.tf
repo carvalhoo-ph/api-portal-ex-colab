@@ -9,7 +9,7 @@ provider "random" {
 
 # API Gateway Configuration
 data "aws_api_gateway_rest_api" "api" {
-  name = "API_postar_ex-colab"  # Nome do API Gateway existente
+  id = "vo1r7nk4md"  # ID do API Gateway existente
 }
 
 resource "aws_api_gateway_stage" "stage" {
