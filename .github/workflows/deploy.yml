@@ -71,5 +71,6 @@ jobs:
             echo "API_URL is empty. Exiting."
             exit 1
           fi
+          echo "API_URL: $API_URL"
           k6 run load-test.js --summary-trend-stats "avg,med,min,max,p(90),p(95)" --out json=resultado.json --env API_URL=$API_URL
         # Esta etapa executa o teste de carga usando o k6, exibe métricas e exporta o relatório em JSON.
