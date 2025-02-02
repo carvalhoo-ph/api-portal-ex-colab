@@ -47,7 +47,7 @@ jobs:
 
       - name: Verify Terraform Output
         run: |
-          terraform output -json api_gateway_url > output.json || echo '{"api_gateway_url": {"value": "default_url"}}' > output.json
+          terraform output -json > output.json || echo '{"api_gateway_url": {"value": "default_url"}}' > output.json
           cat output.json
         # Esta etapa verifica a saída do comando terraform output -json e define um valor padrão se o output não for encontrado.
 
@@ -66,7 +66,7 @@ jobs:
 
       - name: Run load test
         run: |
-          API_URL=$(jq -r '.value' output.json)
+          API_URL=$(jq -r '.api_gateway_url.value' output.json)
           if [ "$API_URL" == "default_url" ]; then
             echo "API_URL is empty. Exiting."
             exit 1
