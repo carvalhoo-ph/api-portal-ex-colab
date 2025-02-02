@@ -112,7 +112,7 @@ resource "aws_lambda_permission" "apigw_login" {
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.login.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:vo1r7nk4md/*/*"
+  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${local.api_id}/*/*"
 }
 
 resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
@@ -120,7 +120,7 @@ resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:vo1r7nk4md/*/*"
+  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${local.api_id}/*/*"
 }
 
 resource "random_string" "suffix" {
