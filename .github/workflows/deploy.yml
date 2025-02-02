@@ -47,7 +47,7 @@ jobs:
 
       - name: Verify Terraform Output
         run: |
-          terraform output -json api_gateway_url > output.json || echo '{"value": "default_url"}' > output.json
+          terraform output -json api_gateway_url > output.json || echo '{"api_gateway_url": {"value": "default_url"}}' > output.json
           cat output.json
         # Esta etapa verifica a saída do comando terraform output -json e define um valor padrão se o output não for encontrado.
 
