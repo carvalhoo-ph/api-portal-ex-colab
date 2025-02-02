@@ -8,12 +8,8 @@ provider "random" {
 }
 
 # API Gateway Configuration
-data "aws_api_gateway_rest_api" "api" {
-  name = "API_postar_ex-colab"  # Nome do API Gateway existente
-}
-
 resource "aws_api_gateway_stage" "stage" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   stage_name    = "prod"
   deployment_id = aws_api_gateway_deployment.deployment.id
 
@@ -23,7 +19,7 @@ resource "aws_api_gateway_stage" "stage" {
 }
 
 resource "aws_api_gateway_deployment" "deployment" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
 
   depends_on = [
     aws_api_gateway_integration.integration_periodo_demonstrativo,
@@ -34,20 +30,20 @@ resource "aws_api_gateway_deployment" "deployment" {
 
 # Periodo Demonstrativo Lambda Integration
 resource "aws_api_gateway_resource" "resource_periodo_demonstrativo" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   parent_id   = data.aws_api_gateway_rest_api.api.root_resource_id
   path_part   = "periodo-demonstrativo"
 }
 
 resource "aws_api_gateway_method" "method_periodo_demonstrativo" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id   = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method   = "GET"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_method_response" "method_response_periodo_demonstrativo" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method = aws_api_gateway_method.method_periodo_demonstrativo.http_method
   status_code = "200"
@@ -68,7 +64,7 @@ data "aws_lambda_function" "periodo_demonstrativo" {
 }
 
 resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id             = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method             = aws_api_gateway_method.method_periodo_demonstrativo.http_method
   integration_http_method = "POST"
@@ -77,7 +73,7 @@ resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_periodo_demonstrativo" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method = aws_api_gateway_method.method_periodo_demonstrativo.http_method
   status_code = "200"
@@ -94,14 +90,14 @@ resource "aws_api_gateway_integration_response" "integration_response_periodo_de
 }
 
 resource "aws_api_gateway_method" "method_options_periodo_demonstrativo" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id   = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativo" {
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id             = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method             = aws_api_gateway_method.method_options_periodo_demonstrativo.http_method
   integration_http_method = "OPTIONS"
@@ -113,7 +109,7 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
 }
 
 resource "aws_api_gateway_method_response" "method_response_options_periodo_demonstrativo" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method = aws_api_gateway_method.method_options_periodo_demonstrativo.http_method
   status_code = "200"
@@ -131,20 +127,20 @@ resource "aws_api_gateway_method_response" "method_response_options_periodo_demo
 
 # Login Lambda Integration
 resource "aws_api_gateway_resource" "resource_login" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   parent_id   = data.aws_api_gateway_rest_api.api.root_resource_id
   path_part   = "login"
 }
 
 resource "aws_api_gateway_method" "method_login" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id   = aws_api_gateway_resource.resource_login.id
   http_method   = "POST"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_method_response" "method_response_login" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_login.id
   http_method = aws_api_gateway_method.method_login.http_method
   status_code = "200"
@@ -165,7 +161,7 @@ data "aws_lambda_function" "login" {
 }
 
 resource "aws_api_gateway_integration" "integration_login" {
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id             = aws_api_gateway_resource.resource_login.id
   http_method             = aws_api_gateway_method.method_login.http_method
   integration_http_method = "POST"
@@ -174,7 +170,7 @@ resource "aws_api_gateway_integration" "integration_login" {
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_login" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_login.id
   http_method = aws_api_gateway_method.method_login.http_method
   status_code = "200"
@@ -191,14 +187,14 @@ resource "aws_api_gateway_integration_response" "integration_response_login" {
 }
 
 resource "aws_api_gateway_method" "method_options_login" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id   = aws_api_gateway_resource.resource_login.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "integration_options_login" {
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id             = aws_api_gateway_resource.resource_login.id
   http_method             = aws_api_gateway_method.method_options_login.http_method
   integration_http_method = "OPTIONS"
@@ -210,7 +206,7 @@ resource "aws_api_gateway_integration" "integration_options_login" {
 }
 
 resource "aws_api_gateway_method_response" "method_response_options_login" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_login.id
   http_method = aws_api_gateway_method.method_options_login.http_method
   status_code = "200"
@@ -228,20 +224,20 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
 
 # Demonstrativo Pgto Lambda Integration
 resource "aws_api_gateway_resource" "resource_demonstrativo_pgto" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   parent_id   = data.aws_api_gateway_rest_api.api.root_resource_id
   path_part   = "demonstrativo-pgto"
 }
 
 resource "aws_api_gateway_method" "method_demonstrativo_pgto" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id   = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method   = "GET"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_method_response" "method_response_demonstrativo_pgto" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method = aws_api_gateway_method.method_demonstrativo_pgto.http_method
   status_code = "200"
@@ -262,7 +258,7 @@ data "aws_lambda_function" "demonstrativo_pgto" {
 }
 
 resource "aws_api_gateway_integration" "integration_demonstrativo_pgto" {
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id             = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method             = aws_api_gateway_method.method_demonstrativo_pgto.http_method
   integration_http_method = "POST"
@@ -271,7 +267,7 @@ resource "aws_api_gateway_integration" "integration_demonstrativo_pgto" {
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_demonstrativo_pgto" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method = aws_api_gateway_method.method_demonstrativo_pgto.http_method
   status_code = "200"
@@ -288,14 +284,14 @@ resource "aws_api_gateway_integration_response" "integration_response_demonstrat
 }
 
 resource "aws_api_gateway_method" "method_options_demonstrativo_pgto" {
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id   = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" {
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id             = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method             = aws_api_gateway_method.method_options_demonstrativo_pgto.http_method
   integration_http_method = "OPTIONS"
@@ -307,7 +303,7 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
 }
 
 resource "aws_api_gateway_method_response" "method_response_options_demonstrativo_pgto" {
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
   resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method = aws_api_gateway_method.method_options_demonstrativo_pgto.http_method
   status_code = "200"
@@ -324,6 +320,6 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
 }
 
 output "api_gateway_url" {
-  value       = "https://${data.aws_api_gateway_rest_api.api.id}.execute-api.${var.region}.amazonaws.com/prod"
+  value       = "https://vo1r7nk4md.execute-api.${var.region}.amazonaws.com/prod"
   description = "The URL of the API Gateway"
 }
