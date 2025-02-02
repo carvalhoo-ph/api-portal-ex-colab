@@ -6,7 +6,6 @@ resource "aws_iam_role" "github_actions" {
     Version = "2012-10-17"
     Statement = [
       {
-        
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
@@ -111,7 +110,7 @@ resource "aws_lambda_permission" "apigw_login" {
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.login.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+  source_arn    = "${data.aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
 
 resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
@@ -119,7 +118,7 @@ resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+  source_arn    = "${data.aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
 
 resource "random_string" "suffix" {

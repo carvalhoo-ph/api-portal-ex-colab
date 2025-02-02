@@ -9,7 +9,7 @@ provider "random" {
 
 # API Gateway Configuration
 data "aws_api_gateway_rest_api" "api" {
-  id = "vo1r7nk4md"  # ID do API Gateway existente
+  name = "API_postar_ex-colab"  # Nome do API Gateway existente
 }
 
 resource "aws_api_gateway_stage" "stage" {
@@ -324,6 +324,6 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
 }
 
 output "api_gateway_url" {
-  value       = "https://vo1r7nk4md.execute-api.us-east-1.amazonaws.com/prod"
+  value       = "https://${data.aws_api_gateway_rest_api.api.id}.execute-api.${var.region}.amazonaws.com/prod"
   description = "The URL of the API Gateway"
 }
