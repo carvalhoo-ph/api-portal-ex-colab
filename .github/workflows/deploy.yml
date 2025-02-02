@@ -67,7 +67,7 @@ jobs:
       - name: Run load test
         run: |
           API_URL=$(jq -r '.api_gateway_url.value' output.json)
-          if [ "$API_URL" == "null" ]; then
+          if [ "$API_URL" == "default_url" ]; then
             echo "API_URL is empty. Exiting."
             exit 1
           fi
