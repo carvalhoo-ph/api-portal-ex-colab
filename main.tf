@@ -19,13 +19,13 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 
 resource "aws_api_gateway_stage" "stage" {
-  rest_api_id   = aws_api_gateway_rest_api.api.id
+  rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   stage_name    = "prod"
   deployment_id = aws_api_gateway_deployment.deployment.id
 }
 
 resource "aws_api_gateway_deployment" "deployment" {
-  rest_api_id = aws_api_gateway_rest_api.api.id
+  rest_api_id = "vo1r7nk4md"  # ID do API Gateway existente
 
   depends_on = [
     aws_api_gateway_integration.integration_periodo_demonstrativo,

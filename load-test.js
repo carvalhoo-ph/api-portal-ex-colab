@@ -3,8 +3,8 @@ import { check, sleep } from 'k6';
 
 export let options = {
   stages: [
-    { duration: '30s', target: 30 }, // ramp up to 10 users
-    { duration: '1m', target: 30 },  // stay at 10 users for 1 minute
+    { duration: '30s', target: 30 }, // ramp up to 30 users
+    { duration: '1m', target: 30 },  // stay at 30 users for 1 minute
     { duration: '30s', target: 0 },  // ramp down to 0 users
   ],
 };
@@ -19,7 +19,9 @@ export default function () {
   });
 
   // Test the 'login' endpoint
-  let res2 = http.post(`${API_URL}/login`, { username: 'test', password: 'test' });
+  let res2 = http.post(`${API_URL}/login`, JSON.stringify({ username: 'test', password: 'test' }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
   check(res2, {
     'status is 200': (r) => r.status === 200,
   });

@@ -47,13 +47,8 @@ jobs:
 
       - name: Verify Terraform Output
         run: |
-          API_URL="https://vo1r7nk4md.execute-api.us-east-1.amazonaws.com/prod"
-          if [ -z "$API_URL" ]; then
-            echo "API_URL is empty. Exiting."
-            exit 1
-          fi
-          echo "API_URL: $API_URL"
-        # Esta etapa verifica a saída do comando terraform output -raw e define um valor padrão se o output não for encontrado.
+          echo "API_URL=https://vo1r7nk4md.execute-api.us-east-1.amazonaws.com/prod" >> $GITHUB_ENV
+        # Esta etapa define a variável de ambiente API_URL.
 
       - name: Add k6 repository
         run: |
@@ -70,5 +65,7 @@ jobs:
 
       - name: Run load test
         run: |
-          k6 run load-test.js --summary-trend-stats "avg,med,min,max,p(90),p(95)" --out json=resultado.json --env API_URL=$API_URL
+          k6 run load-test.js --summary-trend-stats "avg,med,min,max,p(90),p(95)" --out json=resultado.json
+        env:
+          API_URL: ${{ env.API_URL }}
         # Esta etapa executa o teste de carga usando o k6, exibe métricas e exporta o relatório em JSON.
