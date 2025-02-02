@@ -323,3 +323,7 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
     "application/json" = "Empty"
   }
 }
+
+output "api_gateway_url" {
+  value = aws_api_gateway_stage.stage.invoke_url
+}
