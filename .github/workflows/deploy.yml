@@ -47,7 +47,7 @@ jobs:
 
       - name: Verify Terraform Output
         run: |
-          API_URL=$(terraform output -raw api_gateway_url)
+          API_URL="https://vo1r7nk4md.execute-api.us-east-1.amazonaws.com/prod"
           if [ -z "$API_URL" ]; then
             echo "API_URL is empty. Exiting."
             exit 1

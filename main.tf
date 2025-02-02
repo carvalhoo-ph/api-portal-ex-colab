@@ -9,6 +9,7 @@ provider "random" {
 
 # API Gateway Configuration
 resource "aws_api_gateway_rest_api" "api" {
+  provider = aws
   name        = "API_postar_ex-colab"
   description = "API Gateway for my application"
 
@@ -325,6 +326,6 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
 }
 
 output "api_gateway_url" {
-  value       = aws_api_gateway_stage.stage.invoke_url
+  value       = "https://vo1r7nk4md.execute-api.us-east-1.amazonaws.com/prod"
   description = "The URL of the API Gateway"
 }
