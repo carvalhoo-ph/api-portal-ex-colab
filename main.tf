@@ -22,6 +22,10 @@ resource "aws_api_gateway_stage" "stage" {
   rest_api_id   = "vo1r7nk4md"  # ID do API Gateway existente
   stage_name    = "prod"
   deployment_id = aws_api_gateway_deployment.deployment.id
+
+  lifecycle {
+    ignore_changes = [deployment_id]
+  }
 }
 
 resource "aws_api_gateway_deployment" "deployment" {
