@@ -62,13 +62,13 @@ resource "aws_api_gateway_method_response" "method_response_periodo_demonstrativ
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
-    "method.response.header.Access-Control-Allow-Methods" = true
+    method.response.header.Access-Control-Allow-Origin = true
+    method.response.header.Access-Control-Allow-Headers = true
+    method.response.header.Access-Control-Allow-Methods = true
   }
 
   response_models = {
-    "application/json" = "Empty"
+    application/json = "Empty"
   }
 }
 
@@ -92,9 +92,9 @@ resource "aws_api_gateway_integration_response" "integration_response_periodo_de
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
+    method.response.header.Access-Control-Allow-Origin  = "'*'"
+    method.response.header.Access-Control-Allow-Headers = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+    method.response.header.Access-Control-Allow-Methods = "'GET,OPTIONS'"
   }
 
   depends_on = [
@@ -116,8 +116,8 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
   integration_http_method = "OPTIONS"
   type                    = "MOCK"
 
-  request_templates {
-    "application/json" = "{\"statusCode\": 200}"
+  request_templates = {
+    application/json = "{\"statusCode\": 200}"
   }
 }
 
@@ -128,13 +128,13 @@ resource "aws_api_gateway_method_response" "method_response_options_periodo_demo
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true
-    "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
+    method.response.header.Access-Control-Allow-Origin  = true
+    method.response.header.Access-Control-Allow-Methods = true
+    method.response.header.Access-Control-Allow-Headers = true
   }
 
-  response_models {
-    "application/json" = "Empty"
+  response_models = {
+    application/json = "Empty"
   }
 }
 
@@ -159,13 +159,13 @@ resource "aws_api_gateway_method_response" "method_response_login" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
-    "method.response.header.Access-Control-Allow-Methods" = true
+    method.response.header.Access-Control-Allow-Origin = true
+    method.response.header.Access-Control-Allow-Headers = true
+    method.response.header.Access-Control-Allow-Methods = true
   }
 
   response_models = {
-    "application/json" = "Empty"
+    application/json = "Empty"
   }
 }
 
@@ -189,9 +189,9 @@ resource "aws_api_gateway_integration_response" "integration_response_login" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
+    method.response.header.Access-Control-Allow-Origin  = "'*'"
+    method.response.header.Access-Control-Allow-Headers = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+    method.response.header.Access-Control-Allow-Methods = "'POST,OPTIONS'"
   }
 
   depends_on = [
@@ -213,8 +213,8 @@ resource "aws_api_gateway_integration" "integration_options_login" {
   integration_http_method = "OPTIONS"
   type                    = "MOCK"
 
-  request_templates {
-    "application/json" = "{\"statusCode\": 200}"
+  request_templates = {
+    application/json = "{\"statusCode\": 200}"
   }
 }
 
@@ -225,13 +225,13 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true
-    "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
+    method.response.header.Access-Control-Allow-Origin  = true
+    method.response.header.Access-Control-Allow-Methods = true
+    method.response.header.Access-Control-Allow-Headers = true
   }
 
-  response_models {
-    "application/json" = "Empty"
+  response_models = {
+    application/json = "Empty"
   }
 }
 
@@ -256,13 +256,13 @@ resource "aws_api_gateway_method_response" "method_response_demonstrativo_pgto" 
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
-    "method.response.header.Access-Control-Allow-Methods" = true
+    method.response.header.Access-Control-Allow-Origin = true
+    method.response.header.Access-Control-Allow-Headers = true
+    method.response.header.Access-Control-Allow-Methods = true
   }
 
   response_models = {
-    "application/json" = "Empty"
+    application/json = "Empty"
   }
 }
 
@@ -286,9 +286,9 @@ resource "aws_api_gateway_integration_response" "integration_response_demonstrat
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
+    method.response.header.Access-Control-Allow-Origin  = "'*'"
+    method.response.header.Access-Control-Allow-Headers = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+    method.response.header.Access-Control-Allow-Methods = "'GET,OPTIONS'"
   }
 
   depends_on = [
@@ -310,8 +310,8 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
   integration_http_method = "OPTIONS"
   type                    = "MOCK"
 
-  request_templates {
-    "application/json" = "{\"statusCode\": 200}"
+  request_templates = {
+    application/json = "{\"statusCode\": 200}"
   }
 }
 
@@ -322,13 +322,13 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true
-    "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
+    method.response.header.Access-Control-Allow-Origin  = true
+    method.response.header.Access-Control-Allow-Methods = true
+    method.response.header.Access-Control-Allow-Headers = true
   }
 
-  response_models {
-    "application/json" = "Empty"
+  response_models = {
+    application/json = "Empty"
   }
 }
 
