@@ -35,10 +35,15 @@ jobs:
         run: terraform init
         # Esta etapa inicializa o Terraform, baixando os plugins necessários e preparando o ambiente.
 
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -out=tfplan
+        # Esta etapa cria um plano de execução do Terraform para verificar as mudanças.
+
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve
-        # Esta etapa aplica as configurações do Terraform, criando ou atualizando os recursos definidos no arquivo main.tf.
+        run: terraform apply -auto-approve tfplan || terraform apply -auto-approve
+        # Esta etapa aplica as configurações do Terraform usando o plano gerado, criando ou atualizando os recursos definidos no arquivo main.tf.
 
       - name: Add k6 repository
         run: |
