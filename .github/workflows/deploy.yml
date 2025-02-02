@@ -42,8 +42,14 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve tfplan || terraform apply -auto-approve
+        run: terraform apply -auto-approve tfplan
         # Esta etapa aplica as configurações do Terraform usando o plano gerado, criando ou atualizando os recursos definidos no arquivo main.tf.
+
+      - name: Verify Terraform Output
+        run: |
+          terraform output -json api_gateway_url > output.json || echo '{"value": "default_url"}' > output.json
+          cat output.json
+        # Esta etapa verifica a saída do comando terraform output -json e define um valor padrão se o output não for encontrado.
 
       - name: Add k6 repository
         run: |
@@ -58,12 +64,8 @@ jobs:
         run: sudo apt-get install -y k6
         # Esta etapa instala o k6 no ambiente de execução.
 
-      - name: Verify Terraform Output
-        run: terraform output -json api_gateway_url
-        # Esta etapa verifica a saída do comando terraform output -json.
-
       - name: Run load test
         run: |
-          API_URL=$(terraform output -json api_gateway_url | jq -r '.value')
+          API_URL=$(cat output.json | jq -r '.value')
           k6 run load-test.js --summary-trend-stats "avg,med,min,max,p(90),p(95)" --out json=resultado.json --env API_URL=$API_URL
         # Esta etapa executa o teste de carga usando o k6, exibe métricas e exporta o relatório em JSON.

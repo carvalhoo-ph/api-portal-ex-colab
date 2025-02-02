@@ -325,5 +325,5 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
 }
 
 output "api_gateway_url" {
-  value = aws_api_gateway_stage.stage.invoke_url
+  value = aws_api_gateway_rest_api.my_api_gateway.invoke_url
 }
