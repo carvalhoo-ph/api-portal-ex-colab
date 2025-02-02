@@ -39,6 +39,15 @@ jobs:
         run: terraform apply -auto-approve
         # Esta etapa aplica as configurações do Terraform, criando ou atualizando os recursos definidos no arquivo main.tf.
 
+      - name: Add k6 repository
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg software-properties-common
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 33D40BC6
+          echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update
+        # Esta etapa adiciona o repositório oficial do k6.
+
       - name: Install k6
         run: sudo apt-get install -y k6
         # Esta etapa instala o k6 no ambiente de execução.
