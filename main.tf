@@ -41,7 +41,7 @@ resource "aws_api_gateway_deployment" "deployment" {
   ]
 }
 
-# Periodo Demonstrativo Lambda Integration
+// Periodo Demonstrativo Lambda Integration
 resource "aws_api_gateway_resource" "resource_periodo_demonstrativo" {
   rest_api_id = local.api_id
   parent_id   = local.api_id
@@ -116,7 +116,7 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
   integration_http_method = "OPTIONS"
   type                    = "MOCK"
 
-  request_templates = {
+  request_templates {
     "application/json" = "{\"statusCode\": 200}"
   }
 }
@@ -133,7 +133,7 @@ resource "aws_api_gateway_method_response" "method_response_options_periodo_demo
     "method.response.header.Access-Control-Allow-Headers" = true
   }
 
-  response_models = {
+  response_models {
     "application/json" = "Empty"
   }
 }
@@ -213,7 +213,7 @@ resource "aws_api_gateway_integration" "integration_options_login" {
   integration_http_method = "OPTIONS"
   type                    = "MOCK"
 
-  request_templates = {
+  request_templates {
     "application/json" = "{\"statusCode\": 200}"
   }
 }
@@ -230,7 +230,7 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
     "method.response.header.Access-Control-Allow-Headers" = true
   }
 
-  response models = {
+  response_models {
     "application/json" = "Empty"
   }
 }
@@ -261,7 +261,7 @@ resource "aws_api_gateway_method_response" "method_response_demonstrativo_pgto" 
     "method.response.header.Access-Control-Allow-Methods" = true
   }
 
-  response models = {
+  response_models = {
     "application/json" = "Empty"
   }
 }
@@ -310,7 +310,7 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
   integration_http_method = "OPTIONS"
   type                    = "MOCK"
 
-  request templates = {
+  request_templates {
     "application/json" = "{\"statusCode\": 200}"
   }
 }
@@ -327,7 +327,7 @@ resource "aws_api_gateway_method_response" "method_response_options_demonstrativ
     "method.response.header.Access-Control-Allow-Headers" = true
   }
 
-  response models = {
+  response_models {
     "application/json" = "Empty"
   }
 }
