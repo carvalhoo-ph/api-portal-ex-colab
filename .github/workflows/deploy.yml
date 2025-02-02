@@ -37,8 +37,8 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -refresh-only -out=tfplan
-        # Esta etapa cria um plano de execução do Terraform para verificar as mudanças sem criar novos recursos.
+        run: terraform plan -target=aws_api_gateway_rest_api.my_api_gateway -out=tfplan
+        # Esta etapa cria um plano de execução do Terraform para verificar as mudanças no recurso especificado.
 
       - name: Terraform Apply
         id: apply
