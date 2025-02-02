@@ -47,7 +47,7 @@ jobs:
 
       - name: Verify Terraform Output
         run: |
-          terraform output -json api_gateway_url > output.json || echo '{"api_gateway_url": {"value": "default_url"}}' > output.json
+          terraform output -json > output.json || echo '{"api_gateway_url": {"value": "default_url"}}' > output.json
           cat output.json
         # Esta etapa verifica a saída do comando terraform output -json e define um valor padrão se o output não for encontrado.
 
@@ -66,6 +66,6 @@ jobs:
 
       - name: Run load test
         run: |
-          API_URL=$(cat output.json | jq -r '.api_gateway_url.value')
+          API_URL=$(jq -r '.api_gateway_url.value' output.json)
           k6 run load-test.js --summary-trend-stats "avg,med,min,max,p(90),p(95)" --out json=resultado.json --env API_URL=$API_URL
         # Esta etapa executa o teste de carga usando o k6, exibe métricas e exporta o relatório em JSON.
