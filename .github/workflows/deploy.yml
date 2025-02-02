@@ -37,8 +37,8 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -out=tfplan
-        # Esta etapa cria um plano de execução do Terraform para verificar as mudanças.
+        run: terraform plan -refresh-only -out=tfplan
+        # Esta etapa cria um plano de execução do Terraform para verificar as mudanças sem criar novos recursos.
 
       - name: Terraform Apply
         id: apply
