@@ -66,6 +66,6 @@ jobs:
 
       - name: Run load test
         run: |
-          API_URL=$(cat output.json | jq -r '.value')
+          API_URL=$(cat output.json | jq -r '.api_gateway_url.value')
           k6 run load-test.js --summary-trend-stats "avg,med,min,max,p(90),p(95)" --out json=resultado.json --env API_URL=$API_URL
         # Esta etapa executa o teste de carga usando o k6, exibe métricas e exporta o relatório em JSON.
