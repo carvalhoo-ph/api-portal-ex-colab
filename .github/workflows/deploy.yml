@@ -51,7 +51,7 @@ jobs:
 
       - name: Install k6
         run: sudo apt-get install -y k6
-        # Esta etapa instala o k6 no ambiente de execução .
+        # Esta etapa instala o k6 no ambiente de execução.
 
       - name: Verify Terraform Output
         run: terraform output -json api_gateway_url
