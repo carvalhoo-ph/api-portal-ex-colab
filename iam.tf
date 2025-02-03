@@ -107,28 +107,52 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_attach" {
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
-  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativo"
+resource "aws_lambda_permission" "apigw_periodo_demonstrativo_get" {
+  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativoGET"
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/GET/periodo-demonstrativo"
 }
 
-resource "aws_lambda_permission" "apigw_login" {
-  statement_id  = "AllowAPIGatewayInvokeLogin"
+resource "aws_lambda_permission" "apigw_periodo_demonstrativo_options" {
+  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativoOPTIONS"
+  action        = "lambda:InvokeFunction"
+  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/OPTIONS/periodo-demonstrativo"
+}
+
+resource "aws_lambda_permission" "apigw_login_post" {
+  statement_id  = "AllowAPIGatewayInvokeLoginPOST"
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.login.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/POST/login"
 }
 
-resource "aws_lambda_permission" "apigw_demonstrativo_pgto" {
-  statement_id  = "AllowAPIGatewayInvokeDemonstrativoPgto"
+resource "aws_lambda_permission" "apigw_login_options" {
+  statement_id  = "AllowAPIGatewayInvokeLoginOPTIONS"
+  action        = "lambda:InvokeFunction"
+  function_name = data.aws_lambda_function.login.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/OPTIONS/login"
+}
+
+resource "aws_lambda_permission" "apigw_demonstrativo_pgto_get" {
+  statement_id  = "AllowAPIGatewayInvokeDemonstrativoPgtoGET"
   action        = "lambda:InvokeFunction"
   function_name = data.aws_lambda_function.demonstrativo_pgto.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/GET/demonstrativo-pgto"
+}
+
+resource "aws_lambda_permission" "apigw_demonstrativo_pgto_options" {
+  statement_id  = "AllowAPIGatewayInvokeDemonstrativoPgtoOPTIONS"
+  action        = "lambda:InvokeFunction"
+  function_name = data.aws_lambda_function.demonstrativo_pgto.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/OPTIONS/demonstrativo-pgto"
 }
 
 resource "random_string" "suffix" {
