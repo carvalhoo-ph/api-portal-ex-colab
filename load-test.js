@@ -16,7 +16,7 @@ export default function () {
   let res1 = http.get(`${API_URL}/periodo-demonstrativo`);
   check(res1, {
     'status is 200': (r) => r.status === 200,
-    'response body is not empty': (r) => r.body.length > 0,
+    'response body is not empty': (r) => r.body && r.body.length > 0,
   });
 
   // Test the 'login' endpoint with valid credentials
@@ -40,14 +40,14 @@ export default function () {
   let res4 = http.get(`${API_URL}/demonstrativo-pgto`);
   check(res4, {
     'status is 200': (r) => r.status === 200,
-    'response body is not empty': (r) => r.body.length > 0,
+    'response body is not empty': (r) => r.body && r.body.length > 0,
   });
 
   // Test the 'user-profile' endpoint
   let res5 = http.get(`${API_URL}/user-profile`);
   check(res5, {
     'status is 200': (r) => r.status === 200,
-    'response body is not empty': (r) => r.body.length > 0,
+    'response body is not empty': (r) => r.body && r.body.length > 0,
   });
 
   sleep(1);
