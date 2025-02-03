@@ -109,16 +109,6 @@ resource "aws_api_gateway_method" "method_options_periodo_demonstrativo" {
     "method.request.header.Access-Control-Request-Method"  = true,
     "method.request.header.Origin"                         = true
   }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin"  = true
-  }
-
-  response_models = {
-    "application/json" = "Empty"
-  }
 }
 
 resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativo" {
@@ -211,16 +201,6 @@ resource "aws_api_gateway_integration" "integration_login" {
 }
 EOF
   }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
-  }
-
-  response_templates = {
-    "application/json" = ""
-  }
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_login" {
@@ -250,16 +230,6 @@ resource "aws_api_gateway_method" "method_options_login" {
     "method.request.header.Access-Control-Request-Headers" = true,
     "method.request.header.Access-Control-Request-Method"  = true,
     "method.request.header.Origin"                         = true
-  }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin"  = true
-  }
-
-  response_models = {
-    "application/json" = "Empty"
   }
 }
 
@@ -356,16 +326,6 @@ resource "aws_api_gateway_method" "method_options_demonstrativo_pgto" {
     "method.request.header.Access-Control-Request-Headers" = true,
     "method.request.header.Access-Control-Request-Method"  = true,
     "method.request.header.Origin"                         = true
-  }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Origin"  = true
-  }
-
-  response_models = {
-    "application/json" = "Empty"
   }
 }
 
