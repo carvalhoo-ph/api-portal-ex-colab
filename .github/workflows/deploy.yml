@@ -43,8 +43,3 @@ jobs:
         id: apply
         run: terraform apply -auto-approve tfplan
         # Esta etapa aplica as configurações do Terraform usando o plano gerado, criando ou atualizando os recursos definidos no arquivo main.tf.
-
-      - name: Set API URL
-        id: set_api_url
-        run: echo "API_URL=$(terraform output -raw api_gateway_url)" >> $GITHUB_ENV
-        # Esta etapa captura a saída do Terraform e define a variável de ambiente API_URL.
