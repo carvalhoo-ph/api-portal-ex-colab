@@ -322,29 +322,6 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
 }
 
 // Remover duplicações dos recursos aws_lambda_permission
-resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
-  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativo"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/*/periodo-demonstrativo"
-}
-
-resource "aws_lambda_permission" "apigw_login" {
-  statement_id  = "AllowAPIGatewayInvokeLogin"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.login.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/*/login"
-}
-
-resource "aws_lambda_permission" "apigw_demonstrativo_pgto" {
-  statement_id  = "AllowAPIGatewayInvokeDemonstrativoPgto"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.demonstrativo_pgto.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/*/*/demonstrativo-pgto"
-}
 
 output "api_gateway_url" {
   value       = "https://${local.api_id}.execute-api.${var.region}.amazonaws.com/prod"
