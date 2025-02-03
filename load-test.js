@@ -40,7 +40,7 @@ export default function () {
   let res4 = http.get(`${API_URL}/demonstrativo-pgto`);
   check(res4, {
     'status is 200': (r) => r.status === 200,
-    'response body is not empty ': (r) => r.body.length > 0,
+    'response body is not empty': (r) => r.body.length > 0,
   });
 
   sleep(1);
