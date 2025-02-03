@@ -103,6 +103,26 @@ resource "aws_api_gateway_method" "method_options_periodo_demonstrativo" {
   resource_id   = aws_api_gateway_resource.resource_periodo_demonstrativo.id
   http_method   = "OPTIONS"
   authorization = "NONE"
+
+  request_parameters = {
+    "method.request.header.Access-Control-Request-Headers" = true,
+    "method.request.header.Access-Control-Request-Method"  = true,
+    "method.request.header.Origin"                         = true
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Headers" = true,
+      "method.response.header.Access-Control-Allow-Methods" = true,
+      "method.response.header.Access-Control-Allow-Origin"  = true
+    }
+
+    response_models = {
+      "application/json" = "Empty"
+    }
+  }
 }
 
 resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativo" {
@@ -115,22 +135,19 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-}
 
-resource "aws_api_gateway_method_response" "method_response_options_periodo_demonstrativo" {
-  rest_api_id = local.api_id
-  resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
-  http_method = aws_api_gateway_method.method_options_periodo_demonstrativo.http_method
-  status_code = "200"
+  integration_response {
+    status_code = "200"
 
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Headers" = true
-  }
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+      "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
+      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+    }
 
-  response_models = {
-    "application/json" = "Empty"
+    response_templates = {
+      "application/json" = ""
+    }
   }
 }
 
@@ -174,8 +191,48 @@ resource "aws_api_gateway_integration" "integration_login" {
   resource_id             = aws_api_gateway_resource.resource_login.id
   http_method             = aws_api_gateway_method.method_login.http_method
   integration_http_method = "POST"
-  type                    = "AWS_PROXY"
-  uri                     = data.aws_lambda_function.login.invoke_arn
+  type                    = "AWS"
+  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.login.invoke_arn}/invocations"
+
+  request_templates = {
+    "application/json" = <<EOF
+{
+  "body": $input.json('$'),
+  "headers": {
+    #foreach($header in $input.params().header.keySet())
+    "$header": "$util.escapeJavaScript($input.params().header.get($header))"
+    #if($foreach.hasNext),#end
+    #end
+  },
+  "queryStringParameters": {
+    #foreach($queryParam in $input.params().querystring.keySet())
+    "$queryParam": "$util.escapeJavaScript($input.params().querystring.get($queryParam))"
+    #if($foreach.hasNext),#end
+    #end
+  },
+  "pathParameters": {
+    #foreach($pathParam in $input.params().path.keySet())
+    "$pathParam": "$util.escapeJavaScript($input.params().path.get($pathParam))"
+    #if($foreach.hasNext),#end
+    #end
+  }
+}
+EOF
+  }
+
+  integration_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Origin"  = "'*'",
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+      "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
+    }
+
+    response_templates = {
+      "application/json" = ""
+    }
+  }
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_login" {
@@ -200,6 +257,26 @@ resource "aws_api_gateway_method" "method_options_login" {
   resource_id   = aws_api_gateway_resource.resource_login.id
   http_method   = "OPTIONS"
   authorization = "NONE"
+
+  request_parameters = {
+    "method.request.header.Access-Control-Request-Headers" = true,
+    "method.request.header.Access-Control-Request-Method"  = true,
+    "method.request.header.Origin"                         = true
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Headers" = true,
+      "method.response.header.Access-Control-Allow-Methods" = true,
+      "method.response.header.Access-Control-Allow-Origin"  = true
+    }
+
+    response_models = {
+      "application/json" = "Empty"
+    }
+  }
 }
 
 resource "aws_api_gateway_integration" "integration_options_login" {
@@ -212,22 +289,19 @@ resource "aws_api_gateway_integration" "integration_options_login" {
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-}
 
-resource "aws_api_gateway_method_response" "method_response_options_login" {
-  rest_api_id = local.api_id
-  resource_id = aws_api_gateway_resource.resource_login.id
-  http_method = aws_api_gateway_method.method_options_login.http_method
-  status_code = "200"
+  integration_response {
+    status_code = "200"
 
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Headers" = true
-  }
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+      "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
+      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+    }
 
-  response_models = {
-    "application/json" = "Empty"
+    response_templates = {
+      "application/json" = ""
+    }
   }
 }
 
@@ -297,6 +371,26 @@ resource "aws_api_gateway_method" "method_options_demonstrativo_pgto" {
   resource_id   = aws_api_gateway_resource.resource_demonstrativo_pgto.id
   http_method   = "OPTIONS"
   authorization = "NONE"
+
+  request_parameters = {
+    "method.request.header.Access-Control-Request-Headers" = true,
+    "method.request.header.Access-Control-Request-Method"  = true,
+    "method.request.header.Origin"                         = true
+  }
+
+  method_response {
+    status_code = "200"
+
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Headers" = true,
+      "method.response.header.Access-Control-Allow-Methods" = true,
+      "method.response.header.Access-Control-Allow-Origin"  = true
+    }
+
+    response_models = {
+      "application/json" = "Empty"
+    }
+  }
 }
 
 resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" {
@@ -309,22 +403,19 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-}
 
-resource "aws_api_gateway_method_response" "method_response_options_demonstrativo_pgto" {
-  rest_api_id = local.api_id
-  resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
-  http_method = aws_api_gateway_method.method_options_demonstrativo_pgto.http_method
-  status_code = "200"
+  integration_response {
+    status_code = "200"
 
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = true,
-    "method.response.header.Access-Control-Allow-Methods" = true,
-    "method.response.header.Access-Control-Allow-Headers" = true
-  }
+    response_parameters = {
+      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+      "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
+      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+    }
 
-  response_models = {
-    "application/json" = "Empty"
+    response_templates = {
+      "application/json" = ""
+    }
   }
 }
 
