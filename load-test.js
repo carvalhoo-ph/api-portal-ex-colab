@@ -3,13 +3,13 @@ import { check, sleep } from 'k6';
 
 export let options = {
   stages: [
-    { duration: '30s', target: 30 }, // ramp up to 30 users
-    { duration: '1m', target: 30 },  // stay at 30 users for 1 minute
-    { duration: '30s', target: 0 },  // ramp down to 0 users
+    { duration: '30s', target: 20 },
+    { duration: '1m30s', target: 10 },
+    { duration: '20s', target: 0 },
   ],
 };
 
-const API_URL = __ENV.API_URL.split('::')[0]; // Split and take the first part
+const API_URL = __ENV.API_URL;
 
 export default function () {
   // Test the 'periodo-demonstrativo' endpoint
