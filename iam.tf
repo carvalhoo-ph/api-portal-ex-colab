@@ -117,9 +117,6 @@ resource "aws_iam_policy" "lambda_permission_policy_periodo_demonstrativo" {
         Resource = [
           "arn:aws:lambda:${var.region}:${data.aws_caller_identity.current.account_id}:function:${data.aws_lambda_function.periodo_demonstrativo.function_name}"
         ],
-        Principal = {
-          Service = "apigateway.amazonaws.com"
-        },
         Condition = {
           ArnLike = {
             "AWS:SourceArn": [
@@ -145,9 +142,6 @@ resource "aws_iam_policy" "lambda_permission_policy_login" {
         Resource = [
           "arn:aws:lambda:${var.region}:${data.aws_caller_identity.current.account_id}:function:${data.aws_lambda_function.login.function_name}"
         ],
-        Principal = {
-          Service = "apigateway.amazonaws.com"
-        },
         Condition = {
           ArnLike = {
             "AWS:SourceArn": [
@@ -173,9 +167,6 @@ resource "aws_iam_policy" "lambda_permission_policy_demonstrativo_pgto" {
         Resource = [
           "arn:aws:lambda:${var.region}:${data.aws_caller_identity.current.account_id}:function:${data.aws_lambda_function.demonstrativo_pgto.function_name}"
         ],
-        Principal = {
-          Service = "apigateway.amazonaws.com"
-        },
         Condition = {
           ArnLike = {
             "AWS:SourceArn": [
