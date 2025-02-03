@@ -20,7 +20,7 @@ def get_data():
 
         return jsonify(combined_data)
     except Exception as e:
-        return jsonify({'error': 'Failed to fetch data  ', 'message': str(e)}), 500
+        return jsonify({'error': 'Failed to fetch data', 'message': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
