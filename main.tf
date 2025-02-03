@@ -81,23 +81,6 @@ resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
   uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.periodo_demonstrativo.arn}/invocations"
 }
 
-resource "aws_api_gateway_integration_response" "integration_response_periodo_demonstrativo" {
-  rest_api_id = local.api_id
-  resource_id = aws_api_gateway_resource.resource_periodo_demonstrativo.id
-  http_method = aws_api_gateway_method.method_periodo_demonstrativo.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
-  }
-
-  depends_on = [
-    aws_api_gateway_method_response.method_response_periodo_demonstrativo
-  ]
-}
-
 resource "aws_api_gateway_method" "method_options_periodo_demonstrativo" {
   rest_api_id   = local.api_id
   resource_id   = aws_api_gateway_resource.resource_periodo_demonstrativo.id
@@ -163,51 +146,8 @@ resource "aws_api_gateway_integration" "integration_login" {
   resource_id             = aws_api_gateway_resource.resource_login.id
   http_method             = aws_api_gateway_method.method_login.http_method
   integration_http_method = "POST"
-  type                    = "AWS"
+  type                    = "AWS_PROXY"
   uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.login.arn}/invocations"
-
-  request_templates = {
-    "application/json" = <<EOF
-{
-  "body": $input.json('$'),
-  "headers": {
-    #foreach($header in $input.params().header.keySet())
-    "$header": "$util.escapeJavaScript($input.params().header.get($header))"
-    #if($foreach.hasNext),#end
-    #end
-  },
-  "queryStringParameters": {
-    #foreach($queryParam in $input.params().querystring.keySet())
-    "$queryParam": "$util.escapeJavaScript($input.params().querystring.get($queryParam))"
-    #if($foreach.hasNext),#end
-    #end
-  },
-  "pathParameters": {
-    #foreach($pathParam in $input.params().path.keySet())
-    "$pathParam": "$util.escapeJavaScript($input.params().path.get($pathParam))"
-    #if($foreach.hasNext),#end
-    #end
-  }
-}
-EOF
-  }
-}
-
-resource "aws_api_gateway_integration_response" "integration_response_login" {
-  rest_api_id = local.api_id
-  resource_id = aws_api_gateway_resource.resource_login.id
-  http_method = aws_api_gateway_method.method_login.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
-  }
-
-  depends_on = [
-    aws_api_gateway_method_response.method_response_login
-  ]
 }
 
 resource "aws_api_gateway_method" "method_options_login" {
@@ -277,23 +217,6 @@ resource "aws_api_gateway_integration" "integration_demonstrativo_pgto" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.demonstrativo_pgto.arn}/invocations"
-}
-
-resource "aws_api_gateway_integration_response" "integration_response_demonstrativo_pgto" {
-  rest_api_id = local.api_id
-  resource_id = aws_api_gateway_resource.resource_demonstrativo_pgto.id
-  http_method = aws_api_gateway_method.method_demonstrativo_pgto.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
-  }
-
-  depends_on = [
-    aws_api_gateway_method_response.method_response_demonstrativo_pgto
-  ]
 }
 
 resource "aws_api_gateway_method" "method_options_demonstrativo_pgto" {
