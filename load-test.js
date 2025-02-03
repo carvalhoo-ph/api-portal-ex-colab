@@ -9,7 +9,7 @@ export let options = {
   ],
 };
 
-const API_URL = __ENV.API_URL;
+const API_URL = __ENV.API_URL.split('::')[0]; // Split and take the first part
 
 export default function () {
   // Test the 'periodo-demonstrativo' endpoint
