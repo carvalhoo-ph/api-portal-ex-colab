@@ -7,7 +7,7 @@ provider "random" {
   # Configuração do provedor random1
 }
 
-# API Gateway Configuration
+// API Gateway Configuration
 resource "aws_api_gateway_rest_api" "new_api" {
   name = "API_postar_ex-colab"
 }
