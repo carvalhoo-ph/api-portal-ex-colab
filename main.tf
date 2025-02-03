@@ -110,18 +110,14 @@ resource "aws_api_gateway_method" "method_options_periodo_demonstrativo" {
     "method.request.header.Origin"                         = true
   }
 
-  method_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = true,
-      "method.response.header.Access-Control-Allow-Methods" = true,
-      "method.response.header.Access-Control-Allow-Origin"  = true
-    }
-
-    response_models = {
-      "application/json" = "Empty"
-    }
+  response_models = {
+    "application/json" = "Empty"
   }
 }
 
@@ -136,18 +132,14 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
     "application/json" = "{\"statusCode\": 200}"
   }
 
-  integration_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-      "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
+  response_templates = {
+    "application/json" = ""
   }
 }
 
@@ -220,18 +212,14 @@ resource "aws_api_gateway_integration" "integration_login" {
 EOF
   }
 
-  integration_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'",
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'",
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-      "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
+  response_templates = {
+    "application/json" = ""
   }
 }
 
@@ -264,18 +252,14 @@ resource "aws_api_gateway_method" "method_options_login" {
     "method.request.header.Origin"                         = true
   }
 
-  method_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = true,
-      "method.response.header.Access-Control-Allow-Methods" = true,
-      "method.response.header.Access-Control-Allow-Origin"  = true
-    }
-
-    response_models = {
-      "application/json" = "Empty"
-    }
+  response_models = {
+    "application/json" = "Empty"
   }
 }
 
@@ -290,18 +274,14 @@ resource "aws_api_gateway_integration" "integration_options_login" {
     "application/json" = "{\"statusCode\": 200}"
   }
 
-  integration_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-      "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
+  response_templates = {
+    "application/json" = ""
   }
 }
 
@@ -378,18 +358,14 @@ resource "aws_api_gateway_method" "method_options_demonstrativo_pgto" {
     "method.request.header.Origin"                         = true
   }
 
-  method_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = true,
-      "method.response.header.Access-Control-Allow-Methods" = true,
-      "method.response.header.Access-Control-Allow-Origin"  = true
-    }
-
-    response_models = {
-      "application/json" = "Empty"
-    }
+  response_models = {
+    "application/json" = "Empty"
   }
 }
 
@@ -404,18 +380,14 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
     "application/json" = "{\"statusCode\": 200}"
   }
 
-  integration_response {
-    status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
 
-    response_parameters = {
-      "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-      "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
-      "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    }
-
-    response_templates = {
-      "application/json" = ""
-    }
+  response_templates = {
+    "application/json" = ""
   }
 }
 
