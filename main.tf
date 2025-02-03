@@ -7,11 +7,6 @@ provider "random" {
   # Configuração do provedor random
 }
 
-variable "region" {
-  description = "The AWS region to deploy the API Gateway"
-  default     = "us-east-1"
-}
-
 # API Gateway Configuration
 resource "aws_api_gateway_rest_api" "new_api" {
   name = "API_postar_ex-colab"
