@@ -121,16 +121,6 @@ resource "aws_api_gateway_integration" "integration_options_periodo_demonstrativ
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-  }
-
-  response_templates = {
-    "application/json" = ""
-  }
 }
 
 // Login Lambda Integration
@@ -243,16 +233,6 @@ resource "aws_api_gateway_integration" "integration_options_login" {
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-  }
-
-  response_templates = {
-    "application/json" = ""
-  }
 }
 
 // Demonstrativo Pgto Lambda Integration
@@ -338,16 +318,6 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
 
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
-  }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,GET,OPTIONS'",
-    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-  }
-
-  response_templates = {
-    "application/json" = ""
   }
 }
 
