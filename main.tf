@@ -13,13 +13,13 @@ data "aws_api_gateway_rest_api" "existing_api" {
 }
 
 resource "aws_api_gateway_rest_api" "new_api" {
-  count = length(data.aws_api_gateway_rest_api.existing_api.id) == 0 ? 1 : 0
+  count = length(try(data.aws_api_gateway_rest_api.existing_api.id, [])) == 0 ? 1 : 0
   name  = "API_postar_ex-colab"
 }
 
 locals {
-  api_id = length(data.aws_api_gateway_rest_api.existing_api.id) > 0 ? data.aws_api_gateway_rest_api.existing_api.id : aws_api_gateway_rest_api.new_api[0].id
-  root_resource_id = length(data.aws_api_gateway_rest_api.existing_api.id) > 0 ? data.aws_api_gateway_rest_api.existing_api.root_resource_id : aws_api_gateway_rest_api.new_api[0].root_resource_id
+  api_id = length(try(data.aws_api_gateway_rest_api.existing_api.id, [])) > 0 ? data.aws_api_gateway_rest_api.existing_api.id : aws_api_gateway_rest_api.new_api[0].id
+  root_resource_id = length(try(data.aws_api_gateway_rest_api.existing_api.id, [])) > 0 ? data.aws_api_gateway_rest_api.existing_api.root_resource_id : aws_api_gateway_rest_api.new_api[0].root_resource_id
 }
 
 resource "aws_api_gateway_stage" "stage" {
