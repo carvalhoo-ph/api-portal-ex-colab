@@ -321,7 +321,7 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
   }
 }
 
-// Remover duplicações dos recursos aws_lambda_permission
+// Remover duplicações dos recursos aws_lambda_permission 
 
 output "api_gateway_url" {
   value       = "https://${local.api_id}.execute-api.${var.region}.amazonaws.com/prod"
