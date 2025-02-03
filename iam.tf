@@ -105,6 +105,105 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_attach" {
   policy_arn = aws_iam_policy.lambda_exec_policy.arn
 }
 
+resource "aws_iam_policy" "lambda_permission_policy_periodo_demonstrativo" {
+  name = "lambda_permission_policy_periodo_demonstrativo_${random_string.suffix.result}"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "lambda:InvokeFunction"
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:lambda:${var.region}:${data.aws_caller_identity.current.account_id}:function:${data.aws_lambda_function.periodo_demonstrativo.function_name}"
+        ],
+        Principal = {
+          Service = "apigateway.amazonaws.com"
+        },
+        Condition = {
+          ArnLike = {
+            "AWS:SourceArn": [
+              "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/GET/periodo-demonstrativo",
+              "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/OPTIONS/periodo-demonstrativo"
+            ]
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "lambda_permission_policy_login" {
+  name = "lambda_permission_policy_login_${random_string.suffix.result}"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "lambda:InvokeFunction"
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:lambda:${var.region}:${data.aws_caller_identity.current.account_id}:function:${data.aws_lambda_function.login.function_name}"
+        ],
+        Principal = {
+          Service = "apigateway.amazonaws.com"
+        },
+        Condition = {
+          ArnLike = {
+            "AWS:SourceArn": [
+              "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/POST/login",
+              "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/OPTIONS/login"
+            ]
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "lambda_permission_policy_demonstrativo_pgto" {
+  name = "lambda_permission_policy_demonstrativo_pgto_${random_string.suffix.result}"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "lambda:InvokeFunction"
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:lambda:${var.region}:${data.aws_caller_identity.current.account_id}:function:${data.aws_lambda_function.demonstrativo_pgto.function_name}"
+        ],
+        Principal = {
+          Service = "apigateway.amazonaws.com"
+        },
+        Condition = {
+          ArnLike = {
+            "AWS:SourceArn": [
+              "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/GET/demonstrativo-pgto",
+              "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/OPTIONS/demonstrativo-pgto"
+            ]
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_permission_attach_periodo_demonstrativo" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.lambda_permission_policy_periodo_demonstrativo.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_permission_attach_login" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.lambda_permission_policy_login.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_permission_attach_demonstrativo_pgto" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.lambda_permission_policy_demonstrativo_pgto.arn
+}
+
 data "aws_caller_identity" "current" {}
 
 resource "aws_lambda_permission" "apigw_login_part1" {
