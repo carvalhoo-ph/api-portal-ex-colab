@@ -24,8 +24,8 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-resource "aws_iam_policy" "github_actions_policy" {
-  name = "github_actions_policy_${random_string.suffix.result}"
+resource "aws_iam_policy" "github_actions_policy_apigateway" {
+  name = "github_actions_policy_apigateway_${random_string.suffix.result}"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -43,6 +43,16 @@ resource "aws_iam_policy" "github_actions_policy" {
         Effect   = "Allow"
         Resource = "*"
       },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "github_actions_policy_logs" {
+  name = "github_actions_policy_logs_${random_string.suffix.result}"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
       {
         Action = [
           "logs:CreateLogGroup",
@@ -52,6 +62,16 @@ resource "aws_iam_policy" "github_actions_policy" {
         Effect   = "Allow"
         Resource = "*"
       },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "github_actions_policy_iam" {
+  name = "github_actions_policy_iam_${random_string.suffix.result}"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
       {
         Action = [
           "iam:CreateRole",
@@ -66,9 +86,19 @@ resource "aws_iam_policy" "github_actions_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "github_actions_attach" {
+resource "aws_iam_role_policy_attachment" "github_actions_attach_apigateway" {
   role       = aws_iam_role.github_actions.name
-  policy_arn = aws_iam_policy.github_actions_policy.arn
+  policy_arn = aws_iam_policy.github_actions_policy_apigateway.arn
+}
+
+resource "aws_iam_role_policy_attachment" "github_actions_attach_logs" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = aws_iam_policy.github_actions_policy_logs.arn
+}
+
+resource "aws_iam_role_policy_attachment" "github_actions_attach_iam" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = aws_iam_policy.github_actions_policy_iam.arn
 }
 
 # Lambda Execution IAM Role and Policy
