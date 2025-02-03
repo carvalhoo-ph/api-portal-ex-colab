@@ -10,6 +10,14 @@ resource "aws_iam_role" "github_actions" {
         Effect = "Allow"
         Principal = {
           Service = "ec2.amazonaws.com"
+          // Adicione o principal do GitHub Actions
+          Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
+        }
+        Condition = {
+          StringEquals = {
+            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+            "token.actions.githubusercontent.com:sub" = "repo:<your-repo>:ref:refs/heads/<your-branch>"
+          }
         }
       },
     ]
