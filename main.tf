@@ -78,7 +78,7 @@ resource "aws_api_gateway_integration" "integration_periodo_demonstrativo" {
   http_method             = aws_api_gateway_method.method_periodo_demonstrativo.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = data.aws_lambda_function.periodo_demonstrativo.invoke_arn
+  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.periodo_demonstrativo.arn}/invocations"
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_periodo_demonstrativo" {
@@ -164,7 +164,7 @@ resource "aws_api_gateway_integration" "integration_login" {
   http_method             = aws_api_gateway_method.method_login.http_method
   integration_http_method = "POST"
   type                    = "AWS"
-  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.login.invoke_arn}/invocations"
+  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.login.arn}/invocations"
 
   request_templates = {
     "application/json" = <<EOF
@@ -276,7 +276,7 @@ resource "aws_api_gateway_integration" "integration_demonstrativo_pgto" {
   http_method             = aws_api_gateway_method.method_demonstrativo_pgto.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = data.aws_lambda_function.demonstrativo_pgto.invoke_arn
+  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${data.aws_lambda_function.demonstrativo_pgto.arn}/invocations"
 }
 
 resource "aws_api_gateway_integration_response" "integration_response_demonstrativo_pgto" {
