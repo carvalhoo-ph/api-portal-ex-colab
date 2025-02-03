@@ -321,6 +321,7 @@ resource "aws_api_gateway_integration" "integration_options_demonstrativo_pgto" 
   }
 }
 
+// Remover duplicações dos recursos aws_lambda_permission
 resource "aws_lambda_permission" "apigw_periodo_demonstrativo" {
   statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativo"
   action        = "lambda:InvokeFunction"
