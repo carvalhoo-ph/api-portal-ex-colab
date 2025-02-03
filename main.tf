@@ -19,6 +19,7 @@ resource "aws_api_gateway_rest_api" "new_api" {
 
 locals {
   api_id = length(data.aws_api_gateway_rest_api.existing_api.id) > 0 ? data.aws_api_gateway_rest_api.existing_api.id : aws_api_gateway_rest_api.new_api[0].id
+  root_resource_id = length(data.aws_api_gateway_rest_api.existing_api.id) > 0 ? data.aws_api_gateway_rest_api.existing_api.root_resource_id : aws_api_gateway_rest_api.new_api[0].root_resource_id
 }
 
 resource "aws_api_gateway_stage" "stage" {
@@ -44,7 +45,7 @@ resource "aws_api_gateway_deployment" "deployment" {
 // Periodo Demonstrativo Lambda Integration
 resource "aws_api_gateway_resource" "resource_periodo_demonstrativo" {
   rest_api_id = local.api_id
-  parent_id   = local.api_id
+  parent_id   = local.root_resource_id
   path_part   = "periodo-demonstrativo"
 }
 
@@ -141,7 +142,7 @@ resource "aws_api_gateway_method_response" "method_response_options_periodo_demo
 // Login Lambda Integration
 resource "aws_api_gateway_resource" "resource_login" {
   rest_api_id = local.api_id
-  parent_id   = local.api_id
+  parent_id   = local.root_resource_id
   path_part   = "login"
 }
 
@@ -238,7 +239,7 @@ resource "aws_api_gateway_method_response" "method_response_options_login" {
 // Demonstrativo Pgto Lambda Integration
 resource "aws_api_gateway_resource" "resource_demonstrativo_pgto" {
   rest_api_id = local.api_id
-  parent_id   = local.api_id
+  parent_id   = local.root_resource_id
   path_part   = "demonstrativo-pgto"
 }
 
