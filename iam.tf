@@ -206,54 +206,6 @@ resource "aws_iam_role_policy_attachment" "lambda_permission_attach_demonstrativ
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_lambda_permission" "apigw_login_part1" {
-  statement_id  = "AllowAPIGatewayInvokeLoginPart1"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.login.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/POST/login"
-}
-
-resource "aws_lambda_permission" "apigw_login_part2" {
-  statement_id  = "AllowAPIGatewayInvokeLoginPart2"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.login.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/OPTIONS/login"
-}
-
-resource "aws_lambda_permission" "apigw_periodo_demonstrativo_part1" {
-  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativoPart1"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/GET/periodo-demonstrativo"
-}
-
-resource "aws_lambda_permission" "apigw_periodo_demonstrativo_part2" {
-  statement_id  = "AllowAPIGatewayInvokePeriodoDemonstrativoPart2"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.periodo_demonstrativo.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/OPTIONS/periodo-demonstrativo"
-}
-
-resource "aws_lambda_permission" "apigw_demonstrativo_pgto_part1" {
-  statement_id  = "AllowAPIGatewayInvokeDemonstrativoPgtoPart1"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.demonstrativo_pgto.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/GET/demonstrativo-pgto"
-}
-
-resource "aws_lambda_permission" "apigw_demonstrativo_pgto_part2" {
-  statement_id  = "AllowAPIGatewayInvokeDemonstrativoPgtoPart2"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.demonstrativo_pgto.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.new_api.id}/OPTIONS/demonstrativo-pgto"
-}
-
 resource "random_string" "suffix" {
   length  = 8
   special = false
