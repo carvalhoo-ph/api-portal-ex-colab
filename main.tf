@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 provider "random" {
-  # Configuração do provedor random1
+  # Configuração do provedor random1 
 }
 
 // API Gateway Configuration
