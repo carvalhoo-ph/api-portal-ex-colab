@@ -45,9 +45,15 @@ jobs:
         run: terraform apply -auto-approve tfplan
         # Esta etapa aplica as configurações do Terraform usando o plano gerado, criando ou atualizando os recursos definidos no arquivo main.tf.
 
-      - name: Get API Gateway URL
-        id: output
+      - name: Set API URL
+        id: set_api_url
         run: echo "API_URL=$(terraform output -raw api_gateway_url)" >> $GITHUB_ENV
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TERRAFORM_CLI_PATH: ${{ runner.temp }}/terraform
         # Esta etapa captura a saída do Terraform e define a variável de ambiente API_URL.
 
   load-test:
