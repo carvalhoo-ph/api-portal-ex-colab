@@ -43,5 +43,12 @@ export default function () {
     'response body is not empty': (r) => r.body.length > 0,
   });
 
+  // Test the 'user-profile' endpoint
+  let res5 = http.get(`${API_URL}/user-profile`);
+  check(res5, {
+    'status is 200': (r) => r.status === 200,
+    'response body is not empty': (r) => r.body.length > 0,
+  });
+
   sleep(1);
 }
